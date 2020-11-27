@@ -1,0 +1,84 @@
+{% load static %}
+<header>
+    <!-- Header Start -->
+    <div class="header-area">
+        <div class="main-header header-sticky">
+            <div class="container-fluid">
+                <div class="row menu-wrapper align-items-center justify-content-between">
+                    <div class="header-left d-flex align-items-center">
+                        <!-- Logo -->
+                        <div class="logo">
+                            <a href="index.html"><img src="{% static 'ecom/img/logo/logo.png' %}" alt=""></a>
+                        </div>
+                        <!-- Logo-2 -->
+                        <div class="logo2">
+                            <a href="index.html"><img src="{% static 'ecom/img/logo/logo2.png' %}" alt=""></a>
+                        </div>
+                        <!-- Main-menu -->
+                        <div class="main-menu  d-none d-lg-block">
+                            <nav>
+                                <ul id="navigation">
+                                    <li><a href="{% url 'home' %}">Home</a></li> 
+                                    <li><a href="{% url 'home' %}">Product</a></li>
+                                    <li><a href="{% url 'home' %}">About</a></li>
+                                    <li><a href="{% url 'home' %}">Page</a>
+                                        <ul class="submenu">
+                                            <li><a href="{% url 'login' %}">Login</a></li>
+                                            <li><a href="{% url 'card' %}">Card</a></li>
+                                            <li><a href="{% url 'home' %}">Categories</a></li>
+                                            <li><a href="{% url 'checkout' %}">Checkout</a></li>
+                                            <li><a href="{% url 'home' %}">Product Details</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="{% url 'home' %}">Blog</a>
+                                        <ul class="submenu">
+                                            <li><a href="{% url 'home' %}">Blog</a></li>
+                                            <li><a href="{% url 'home' %}">Blog Details</a></li>
+                                            <li><a href="{% url 'home' %}">Elements</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="{% url 'home' %}">Contact</a></li>
+                                </ul>
+                            </nav>
+                        </div>   
+                    </div>
+                    <div class="header-right1 d-flex align-items-center">
+                        <div class="search">
+                            <ul class="d-flex align-items-center">
+                                <li>
+                                    <!-- Search Box -->
+                                    <form action="#" class="form-box f-right ">
+                                        <input type="text" name="Search" placeholder="Search products">
+                                        <div class="search-icon">
+                                            <i class="ti-search"></i>
+                                        </div>
+                                    </form>
+                                </li>
+                                {% if user.is_authenticated %}
+                                <li>
+                                    <a href="#" class="account-btn" target="_blank">My Account</a>
+                                </li>
+                                {% else %}
+                                <li>
+                                    <a href="{% url 'login' %}" class="account-btn" target="_blank">Login</a>
+                                </li>
+                                {% endif %}
+                                <li>
+                                    <div class="card-stor"><a href="{% url 'card' %}">
+                                        <img src="{% static 'ecom/img/icon/card.svg' %}" alt="">
+                                        <span>{{ item_num }}</span></a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Mobile Menu -->
+                    <div class="col-12">
+                        <div class="mobile_menu d-block d-lg-none"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header End -->
+</header>

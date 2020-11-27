@@ -1,0 +1,229 @@
+{% extends 'ecom/base.html' %}
+{% block extra_script %}
+<style>
+    .add-cart{
+      border: none;
+      background: transparent;
+      cursor: pointer;
+    }
+    .btn{
+     background:#FD8F5F !important;
+    }
+  </style>
+ {% endblock %}
+{% block slide %}
+    <main>
+        <!--? slider Area Start-->
+        <div class="slider-area ">
+            <div class="slider-active">
+                <div class="single-slider hero-overly2  slider-height2 d-flex align-items-center slider-bg2">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-8 col-md-8">
+                                <div class="hero__caption hero__caption2">
+                                    <h1 data-animation="fadeInUp" data-delay=".4s" >Cart List</h1>
+                                    <nav aria-label="breadcrumb">
+                                        <ol class="breadcrumb">
+                                            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                                            <li class="breadcrumb-item"><a href="#">Cart List</a></li> 
+                                        </ol>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}
+        <!-- slider Area End-->
+        <!--================Cart Area =================-->
+{% block body %}
+        <section class="cart_area section-padding40">
+            <div class="container">
+                {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags}}" role="alert" style="text-align: center;">
+                    {{ message }}
+                </div>
+                {% endfor %}
+                {% endif %}
+                <div class="cart_inner">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Product</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Total</th>
+                                </tr>
+                            </thead>
+                            {% for item in item_list %}
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="media">
+                                            <div class="d-flex">
+                                                <img src="{{ item.item.main_image.url }}" alt="" />
+                                            </div>
+                                            <div class="media-body">
+                                                <p>{{ item.item.name}}</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <h5>{{ item.item.price }}</h5>
+                                    </td>
+                                    <td>
+                                        <div class="product_count">
+                                            <span class="input-number-decrement"><button data-product="{{ item.item.slug }}" data-action="dec" class="add-cart"><i style="color: rgb(235, 54, 54);" class="ti-minus"></i></button></span>
+                                            <input class="input-number" type="text" value="{{ item.quantity }}" min="0" max="10">
+                                            <span class="input-number-increment"><button data-product="{{ item.item.slug }}" data-action="inc" class="add-cart"><i style="color: rgb(105, 212, 105);" class="fas fa-plus"></i></button></span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        {% if item.item.dis_price %}
+                                            <h5>${{ item.get_item_disc_price }}</h5>
+                                            <span class="badge badge-success">${{ item.get_saved|floatformat }}</span>
+                                            <a href="{% url 'remove' item.item.slug %}"><i class="fas fa-trash ml-30" style="color: red;"></i></a>
+                                        {% else %}
+                                            <h5>${{ item.get_item_price }}</h5>
+                                            <a href="{% url 'remove' item.item.slug %}"><i class="fas fa-trash" style="color: red;"></i></a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                    <div class="alert alert-danger gj-text-align-center" role="alert">
+                                        <h4 class="alert-heading">Courntly you have no cart item!</h4>
+                                    </div>
+                                    <tr>
+                                        <td>
+                                            <div class="media">
+                                                <div class="d-flex">
+                                                    <img style="height: 100px;width: 500px;" src="https://www.acam.org/global_graphics/default-store-350x350.jpg" alt="" />
+                                                </div>
+                                                <div class="media-body">
+                                                    <p>???????</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <h5>$???</h5>
+                                        </td>
+                                        <td>
+                                            <div class="product_count">
+                                                <span class="input-number-decrement"> <i class="ti-minus"></i></span>
+                                                <input class="input-number" type="text" value="???" min="0" max="10">
+                                                <span class="input-number-increment"> <i class="ti-plus"></i></span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <h5>$???</h5>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                <!-- <tr>
+                                    <td>
+                                        <div class="media">
+                                            <div class="d-flex">
+                                                <img src="assets/img/gallery/card2.png" alt="" />
+                                            </div>
+                                            <div class="media-body">
+                                                <p>Minimalistic shop for multipurpose use</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <h5>$360.00</h5>
+                                    </td>
+                                    <td>
+                                        <div class="product_count">
+                                            <span class="input-number-decrement"> <i class="ti-minus"></i></span>
+                                            <input class="input-number" type="text" value="1" min="0" max="10">
+                                            <span class="input-number-increment"> <i class="ti-plus"></i></span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <h5>$720.00</h5>
+                                    </td>
+                                </tr>
+                                <tr class="bottom_button">
+                                    <td>
+                                        <a class="btn" href="#">Update Cart</a>
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        <div class="cupon_text float-right">
+                                            <a class="btn" href="#">Close Coupon</a>
+                                        </div>
+                                    </td>
+                                </tr> -->
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        <h5>Subtotal</h5>
+                                    </td>
+                                    <td>
+                                        <h5>${{ cart.final_price|floatformat:"0" }}</h5>
+                                    </td>
+                                </tr>
+                                <tr class="shipping_area">
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        <h5>Shipping</h5>
+                                    </td>
+                                    <td>
+                                        <div class="shipping_box">
+                                            <ul class="list">
+                                                <li>
+                                                    Flat Rate: $5.00
+                                                    <input type="radio" aria-label="Radio button for following text input">
+                                                </li>
+                                                <li>
+                                                    Free Shipping
+                                                    <input type="radio" aria-label="Radio button for following text input">
+                                                </li>
+                                                <li>
+                                                    Flat Rate: $10.00
+                                                    <input type="radio" aria-label="Radio button for following text input">
+                                                </li>
+                                                <li class="active">
+                                                    Local Delivery: $2.00
+                                                    <input type="radio" aria-label="Radio button for following text input">
+                                                </li>
+                                            </ul>
+                                            <h6>
+                                                Calculate Shipping
+                                                <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                            </h6>
+                                            <select class="shipping_select">
+                                                <option value="1">Bangladesh</option>
+                                                <option value="2">India</option>
+                                                <option value="4">Pakistan</option>
+                                            </select>
+                                            <select class="shipping_select section_bg">
+                                                <option value="1">Select a State</option>
+                                                <option value="2">Select a State</option>
+                                                <option value="4">Select a State</option>
+                                            </select>
+                                            <input class="post_code" type="text" placeholder="Postcode/Zipcode" />
+                                            <a class="btn" href="#">Update Details</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="checkout_btn_inner float-right">
+                            <a class="btn" href="{% url 'home' %}">Continue Shopping</a>
+                            <a class="btn checkout_btn" href="{% url 'checkout' %}">Proceed to checkout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--================End Cart Area =================-->
+{% endblock %}       

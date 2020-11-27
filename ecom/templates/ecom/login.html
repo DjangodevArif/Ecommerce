@@ -1,0 +1,89 @@
+<style>
+    .body{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh; 
+        background: linear-gradient(-30deg, #11998e, #51b956, #217a51);
+        /* filter: hue-rotate(110deg); */
+    }
+    .box{
+        position: relative;
+        padding: 50px;
+        width: 200px;
+        height: 300px;
+        display: flex;
+        /* flex-direction: ; */
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.205);
+        border-radius: 50px;
+        box-shadow:  23px 23px 46px #266456;    
+    }
+    .box::after{
+        /* content: '';
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        right: 5px;
+        bottom: 5px;
+        background: blanchedalmond; */
+    }
+    .form{
+        position: relative;
+        width: 100%;
+    }
+    .username,.password{
+        position: relative; 
+        width: 100%;
+        margin-bottom: 20px;
+    }
+    input, button{
+        width: 100%;
+        padding: 7px 10px;
+        border: none;
+        outline: none;
+        border-radius: 10px;
+        color: rgb(39, 41, 41);
+        font-size: 15px;
+        font-weight: 700;
+        background: rgb(204, 204, 204);
+        border: 1px solid rgb(63, 156, 148);
+        box-shadow:  2px 3px 8px rgba(0, 0, 0, 0.473);
+    }
+    button{
+        cursor: pointer;
+    }
+</style>
+
+
+<div class="body" >
+    <div class="box">
+        <div class="form">
+            <form method="POST">
+                {% csrf_token %}
+                    {% if form.errors %}
+                    <div class="error">
+                        Error: Type correct username & password !!
+                    </div>
+                    {% endif %}
+                    <div class="username">
+                    <input type="text" name="username" placeholder="Username">
+                    <i></i>
+                    </div>
+                    <div class="password">
+                    <input type="password" name="password" placeholder="Password">
+                    <i></i>
+                    </div>
+                    <div class="submite" >
+                        <button type="submit">Login</button>
+                    </div>
+            </form>
+            <div class="text">
+                <p>Need an account? <a href="">Register...</a></p>
+                <small><a href=''>Forgot Password ?</a></small>
+            </div>
+        </div>
+    </div>
+</div>

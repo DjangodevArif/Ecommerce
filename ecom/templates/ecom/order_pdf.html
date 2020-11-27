@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'ecom/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'ecom/css/style.css' %}">
+    <style>
+        .container{
+            background-color: darkcyan !important;
+        }
+        thead tr >th {
+            color: crimson;
+        }
+        tbody >td{
+            color: black;
+        }
+        .container{
+            padding: 16px 32px !important;
+        }
+        
+    </style>
+</head>
+<body>
+    <section class="cart_area section-padding40">
+        <div class="container" id="container">
+            <div class="cart_inner">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Product</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in order.product.all %}
+                            <!-- <tr> -->
+                                <tr>
+                                    <!-- <th scope="row">{{ forloop.counter }}</th> -->
+                                    <td>{{ item.item.name }}</td>
+                                    <td>{{ item.item.price }}</td>
+                                    <td>{{ item.quantity }}</td>
+                                    <td>{{ item.total_price }}</td>
+                                    
+                                  </tr>
+                                <!-- <td>
+                                    {% if item.item.dis_price %}
+                                        <h5>${{ item.get_item_disc_price }}</h5>
+                                        <span class="badge badge-success">${{ item.get_saved|floatformat }}</span>
+                                        <a href="{% url 'remove' item.item.slug %}"><i class="fas fa-trash ml-30" style="color: red;"></i></a>
+                                    {% else %}
+                                        <h5>${{ item.get_item_price }}</h5>
+                                        <a href="{% url 'remove' item.item.slug %}"><i class="fas fa-trash" style="color: red;"></i></a>
+                                    {% endif %}
+                                </td> -->
+                            <!-- </tr> -->
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

@@ -1,0 +1,151 @@
+{% load static %}
+<!doctype html>
+<html class="no-js" lang="zxx">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Shop | eCommerce</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="C:/Users/Arif/Downloads/favicon-1.ico">
+
+
+    <!-- CSS here -->
+    <script src="https://kit.fontawesome.com/79adcad059.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'ecom/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'ecom/css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'ecom/css/slicknav.css' %}">
+    
+    <link rel="stylesheet" href="{% static 'ecom/css/progressbar_barfiller.css' %}">
+    <link rel="stylesheet" href="{% static 'ecom/css/price_rangs.css' %}">
+    <link rel="stylesheet" href="{% static 'ecom/css/gijgo.css' %}">
+    <link rel="stylesheet" href="{% static 'ecom/css/animate.min.css' %}">
+    <link rel="stylesheet" href="{% static 'ecom/css/animated-headline.css' %}">
+    <link rel="stylesheet" href="{% static 'ecom/css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static 'ecom/css/fontawesome-all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'ecom/css/themify-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'ecom/css/slick.css' %}">
+    <link rel="stylesheet" href="{% static 'ecom/css/nice-select.css' %}">
+    <link rel="stylesheet" href="{% static 'ecom/css/style.css' %}">
+    {% block extra_script %}
+
+    {% endblock %}
+    
+</head>
+<body>
+    <!-- ? Preloader Start -->
+    <div id="preloader-active">
+        <div class="preloader d-flex align-items-center justify-content-center">
+            <div class="preloader-inner position-relative">
+                <div class="preloader-circle"></div>
+                <div class="preloader-img pere-text">
+                    <img src="{% static 'ecom/img/logo/loder.png' %}" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Preloader Start-->
+    
+    <!-- header end -->
+        {% include 'ecom/header.html' %}
+    <!-- header end -->
+    <main>
+        
+        {% block slide %}
+                <!--? slider Area Start-->
+        {% endblock %}
+        
+        
+        {% block body %}
+            <!--? body Start -->
+        {% endblock %}
+        
+        <!--? Services Area Start -->
+        {% include 'ecom/service.html' %}
+        <!--? Services Area End -->
+    </main>
+    
+        {% include 'ecom/footer.html' %}
+    
+      <!-- Scroll Up -->
+      <div id="back-top" >
+        <a title="Go to Top" href="#"> <i class="fas fa-level-up-alt"></i></a>
+    </div>
+
+    <!-- JS here -->
+    <!-- Jquery, Popper, Bootstrap -->
+
+    <script src="{% static 'ecom/js/vendor/modernizr-3.5.0.min.js'%}"></script>
+    <script src="{% static 'ecom/js/vendor/jquery-1.12.4.min.js' %}"></script>
+    <script src="{% static 'ecom/js/popper.min.js' %}"></script>
+    <script src="{% static 'ecom/js/bootstrap.min.js' %}"></script>
+    {% block scriprt %}
+        
+    {% endblock %}
+    <!-- Slick-slider , Owl-Carousel ,slick-nav -->
+    <script src="{% static 'ecom/js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'ecom/js/slick.min.js' %}"></script>
+    <script src="{% static 'ecom/js/jquery.slicknav.min.js' %}"></script>
+    
+    <!-- One Page, Animated-HeadLin, Date Picker -->
+    <script src="{% static 'ecom/js/wow.min.js' %}"></script>
+    <script src="{% static 'ecom/js/animated.headline.js' %}"></script>
+    <script src="{% static 'ecom/js/jquery.magnific-popup.js' %}"></script>
+    <script src="{% static 'ecom/js/gijgo.min.js' %}"></script>
+    
+
+    <!-- Nice-select, sticky,Progress -->
+    <script src="{% static 'ecom/js/jquery.nice-select.min.js' %}"></script>
+    <script src="{% static 'ecom/js/jquery.sticky.js' %}"></script>
+    <script src="{% static 'ecom/js/jquery.barfiller.js' %}"></script>
+    
+    <!-- counter , waypoint,Hover Direction -->
+    <script src="{% static 'ecom/js/jquery.counterup.min.js' %}"></script>
+    <script src="{% static 'ecom/js/waypoints.min.js' %}"></script>
+    <script src="{% static 'ecom/js/jquery.countdown.min.js' %}"></script>
+    <script src="{% static 'ecom/js/hover-direction-snake.min.js' %}"></script>
+
+    <!-- contact js -->
+    <script src="{% static 'ecom/js/contact.js' %}"></script>
+    <script src="{% static 'ecom/js/jquery.form.js' %}"></script>
+    <script src="{% static 'ecom/js/jquery.validate.min.js' %}"></script>
+    <script src="{% static 'ecom/js/mail-script.js' %}"></script>
+    <script src="{% static 'ecom/js/jquery.ajaxchimp.min.js' %}"></script>
+    
+    <!-- Jquery Plugins, main Jquery -->	
+    <script src="{% static 'ecom/js/plugins.js' %}"></script>
+    <script src="{% static 'ecom/js/main.js' %}"></script>
+    <script src="{% static 'ecom/js/cart.js' %}"> </script>
+    
+    
+    <script>
+        var user = "{{ request.user }}"
+        function getCookie(name) {
+        let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        console.log(user)
+        const csrftoken = getCookie('csrftoken');
+        var cart = JSON.parse(getCookie('cart'));
+        console.log('cart was created!!',cart)
+        if(cart == undefined){
+            cart = {}
+            console.log('cart was created!!',cart)
+            document.cookie = 'cart=' +JSON.stringify(cart) + ';domain=;path=/'
+
+        }
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,575 @@
+{% extends 'ecom/base.html' %}
+{% load static %}
+{% block extra_script %}
+<link rel="stylesheet" href="{% static 'ecom/css/lightslider.min.css' %}">
+<!-- <script src="{% static 'ecom/js/cart.js' %}"> </script> -->
+<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+ <style>
+   .add-cart{
+     border: none;
+     background: transparent;
+     cursor: pointer;
+   }
+   .btn{
+    background:#FD8F5F !important;
+   }
+   .form-control{
+     font-size: medium;
+   }
+   a:not([href]):not([tabindex]):hover{
+     color: #fbd600;
+     cursor: pointer;
+   }
+ </style>
+{% endblock %}
+{% block slide %}
+  <main>
+    <!--? slider Area Start-->
+    <div class="slider-area ">
+      <div class="slider-active">
+        <div class="single-slider hero-overly2  slider-height2 d-flex align-items-center slider-bg2">
+          <div class="container">
+            <div class="row">
+              <div class="col-xl-6 col-lg-8 col-md-8">
+                <div class="hero__caption hero__caption2">
+                  <h1 data-animation="fadeInUp" data-delay=".4s" >Product details</h1>
+                  <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                      <li class="breadcrumb-item"><a href="#">Product details</a></li> 
+                    </ol>
+                  </nav>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- slider Area End-->
+{% endblock %}
+    <!--? Single Product Area Start-->
+{% block body %}
+    <div class="product_image_area section-padding40">
+      <div class="container">
+          {% if messages %}
+          {% for message in messages %}
+          <div class="alert alert-{{ message.tags}}" role="alert" style="text-align: center;">
+            {{ message }}
+          </div>
+          {% endfor %}
+          {% endif %}
+        <div class="row s_product_inner">
+          <div class="col-lg-5">
+            <div class="product_slider_img">
+              <div id="vertical">
+
+                {% for image in object.imageitem_set.all %}               
+                <div data-thumb="{{ image.image.url }}">
+                  <img src="{{ image.image.url }}"  class="w-100">
+                </div>
+                {% empty %}
+                <div data-thumb="{{ object.main_image.url }}">
+                  <img src="{{ object.main_image.url }}"  class="w-100">
+                </div>
+                {% endfor %}
+                {% comment %}
+                <!-- <div data-thumb="{% static 'ecom/img/gallery/product-details2.png' %}">
+                  <img src="{% static 'ecom/img/gallery/product-details2.png' %}"  class="w-100">
+                </div>
+                <div data-thumb="{% static 'ecom/img/gallery/product-details3.png' %}">
+                  <img src="{% static 'ecom/img/gallery/product-details3.png' %}"  class="w-100">
+                </div>
+                <div data-thumb="{% static 'ecom/img/gallery/product-details4.png' %}">
+                  <img src="{% static 'ecom/img/gallery/product-details4.png' %}"  class="w-100">
+                </div> -->
+                {% endcomment %}
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-5 offset-lg-1">
+            <div class="s_product_text">
+              <h3>{{ object.name }}</h3>
+              <h2>${{ object.price }}</h2>
+              <ul class="list">
+                <li>
+                  <a class="active" href="#">
+                    <span>Category</span> : Household</a>
+                  </li>
+                  <li>
+                    <a href="#"> <span>Availibility</span> : In Stock</a>
+                  </li>
+                </ul>
+                <p>
+                  {{object.description}}
+                </p>
+                <div class="card_area">
+                  <div class="product_count d-inline-block">
+                    <button data-product="{{ object.slug }}" data-action="dec" class="add-cart"><i style="color: rgb(235, 54, 54);" class="ti-minus"></i></button>
+                    <input class="input-number" type="text" value="{{ quantity }}" min="0" max="10">
+                    <button data-product="{{ object.slug }}" data-action="inc" class="add-cart" ><i  style="color: rgb(48, 172, 54);" class="fas fa-plus "></i></button>
+                  </div>
+                  <div class="add_to_cart">
+                    <button  data-product="{{ object.slug }}" data-action="add" class="btn add-cart">add to cart</button>
+                    <a href="#" class="like_us"> <i class="ti-heart"></i> </a>
+                  </div>
+                  <div class="social_icon">
+                    <a href="#" class="fb"><i class="ti-facebook"></i></a>
+                    <a href="#" class="tw"><i class="ti-twitter-alt"></i></a>
+                    <a href="#" class="li"><i class="ti-linkedin"></i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Single Product Area End-->
+      <!--? Product Description Area Start-->
+      <section class="product_description_area">
+        <div class="container">
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+              aria-selected="true">Description</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+              aria-selected="false">Specification</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
+              aria-selected="false">Comments</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review"
+              aria-selected="false">Reviews</a>
+            </li>
+          </ul>
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
+              <p>
+                Beryl Cook is one of Britain’s most talented and amusing artists
+                .Beryl’s pictures feature women of all shapes and sizes enjoying
+                themselves .Born between the two world wars, Beryl Cook eventually
+                left Kendrick School in Reading at the age of 15, where she went
+              </p>
+              <p>
+                It is often frustrating to attempt to plan meals that are designed
+                for one. Despite this fact, we are seeing more and more recipe
+                books and Internet websites that are dedicated to the act of
+                cooking for one. Divorce and the death of spouses or grown
+              </p>
+            </div>
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+              <div class="table-responsive">
+                <table class="table">
+                  <tbody>
+                    <tr>
+                      <td>
+                        <h5>Width</h5>
+                      </td>
+                      <td>
+                        <h5>128mm</h5>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <h5>Height</h5>
+                      </td>
+                      <td>
+                        <h5>508mm</h5>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <h5>Depth</h5>
+                      </td>
+                      <td>
+                        <h5>85mm</h5>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <h5>Weight</h5>
+                      </td>
+                      <td>
+                        <h5>52gm</h5>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <h5>Quality checking</h5>
+                      </td>
+                      <td>
+                        <h5>yes</h5>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <h5>Freshness Duration</h5>
+                      </td>
+                      <td>
+                        <h5>03days</h5>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <h5>When packeting</h5>
+                      </td>
+                      <td>
+                        <h5>Without touch of hand</h5>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <h5>Each Box contains</h5>
+                      </td>
+                      <td>
+                        <h5>60pcs</h5>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="comment_list">
+                    <div class="review_item">
+                      <div class="media">
+                        <div class="d-flex">
+                          <img src="{% static 'ecom/img/gallery/review-1.png' %}" alt="" />
+                        </div>
+                        <div class="media-body">
+                          <h4>Blake Ruiz</h4>
+                          <h5>12th Feb, 2017 at 05:56 pm</h5>
+                          <a class="reply_btn" href="#">Reply</a>
+                        </div>
+                      </div>
+                      <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                        sed do eiusmod tempor incididunt ut labore et dolore magna
+                        aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                        ullamco laboris nisi ut aliquip ex ea commodo
+                      </p>
+                    </div>
+                    <div class="review_item reply">
+                      <div class="media">
+                        <div class="d-flex">
+                          <img src="{% static 'ecom/img/gallery/review-2.png' %}" alt="" />
+                        </div>
+                        <div class="media-body">
+                          <h4>Blake Ruiz</h4>
+                          <h5>12th Feb, 2017 at 05:56 pm</h5>
+                          <a class="reply_btn" href="#">Reply</a>
+                        </div>
+                      </div>
+                      <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                        sed do eiusmod tempor incididunt ut labore et dolore magna
+                        aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                        ullamco laboris nisi ut aliquip ex ea commodo
+                      </p>
+                    </div>
+                    <div class="review_item">
+                      <div class="media">
+                        <div class="d-flex">
+                          <img src="{% static 'ecom/img/gallery/review-3.png' %}" alt="" />
+                        </div>
+                        <div class="media-body">
+                          <h4>Blake Ruiz</h4>
+                          <h5>12th Feb, 2017 at 05:56 pm</h5>
+                          <a class="reply_btn" href="#">Reply</a>
+                        </div>
+                      </div>
+                      <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                        sed do eiusmod tempor incididunt ut labore et dolore magna
+                        aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                        ullamco laboris nisi ut aliquip ex ea commodo
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="review_box">
+                    <h4>Post a comment</h4>
+                    <form class="row contact_form" action="contact_process.php" method="post" id="contactForm"
+                    novalidate="novalidate">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Your Full name" />
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Email Address" />
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <input type="text" class="form-control" id="number" name="number" placeholder="Phone Number" />
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <textarea class="form-control" name="message" id="message" rows="1"
+                        placeholder="Message"></textarea>
+                      </div>
+                    </div>
+                    <div class="col-md-12 text-right">
+                      <button type="submit" value="submit" class="btn">
+                        Submit Now
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane fade show active" id="review" role="tabpanel" aria-labelledby="review-tab">
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="row total_rate">
+                  <div class="col-6">
+                    <div class="box_total">
+                      <h5>Overall</h5>
+                      <h4>4.0</h4>
+                      <h6>(03 Reviews)</h6>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="rating_list">
+                      <h3>Based on 3 Reviews</h3>
+                      <ul class="list">
+                        <li>
+                          <a href="#">5 Star
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i> 01</a>
+                          </li>
+                          <li>
+                            <a href="#">4 Star
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star"></i> 01</a>
+                            </li>
+                            <li>
+                              <a href="#">3 Star
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i> 01</a>
+                              </li>
+                              <li>
+                                <a href="#">2 Star
+                                  <i class="fa fa-star"></i>
+                                  <i class="fa fa-star"></i>
+                                  <i class="fa fa-star"></i>
+                                  <i class="fa fa-star"></i>
+                                  <i class="fa fa-star"></i> 01</a>
+                                </li>
+                                <li>
+                                  <a href="#">1 Star
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i> 01</a>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="review_list">
+                            {% for review in all_review %}
+                            <div class="review_item" id="review1">
+                              <div class="media">
+                                <div class="d-flex">
+                                  <img src="{% static 'ecom/img/gallery/review-1.png' %}" alt="" />
+                                </div>
+                                <div class="media-body">
+                                  <h4>{{ review.author.user.username }}</h4>
+
+                                  {% with ''|center:review.star as range %}
+                                    {% for _ in range %}
+                                      <i class="fa fa-star "></i>
+                                    {% endfor %}
+                                  {% endwith %}
+                                  
+                                </div>
+                              </div>
+                              <p>
+                                {{ review.body }}
+                              </p>
+                            </div>
+                            {% endfor %}
+                            <div class="review_item">
+                              <div class="media">
+                                <div class="d-flex">
+                                  <img src="{% static 'ecom/img/gallery/review-2.png' %}" alt="" />
+                                </div>
+                                <div class="media-body">
+                                  <h4>Blake Ruiz</h4>
+                                  <i class="fa fa-star"></i>
+                                  <i class="fa fa-star"></i>
+                                  <i class="fa fa-star"></i>
+                                  <i class="fa fa-star"></i>
+                                  <i class="fa fa-star"></i>
+                                </div>
+                              </div>
+                              <p>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                                sed do eiusmod tempor incididunt ut labore et dolore magna
+                                aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                                ullamco laboris nisi ut aliquip ex ea commodo
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-6">
+                          <div class="review_box">
+                            <h4>Add a Review</h4>
+                            <p>Your Rating:</p>
+                            <ul class="list">
+                              <li>
+                                <a href="#">
+                                  <a class="far fa-star mr-2" id="one" data-num="1" ></a>
+                                </a>
+                              </li>
+                              <li>
+                                <a href="#">
+                                  <a class="far fa-star mr-2" id="two" data-num="2"></a>
+                                </a>
+                              </li>
+                              <li>
+                                <a href="#">
+                                  <a class="far fa-star mr-2" id="three" data-num="3"></a>
+                                </a>
+                              </li>
+                              <li>
+                                <a href="#">
+                                  <a class="far fa-star mr-2" id="four" data-num="4"></a>
+                                </a>
+                              </li>
+                              <li>
+                                <a href="#">
+                                  <a class="far fa-star mr-2" id="five" data-num="5"></a>
+                                </a>
+                              </li>
+                            </ul>
+                            <p id="filling"></p>
+                            <form class="row contact_form" method="post" id="form" >
+                              {% csrf_token %}
+                              {{ form.body }}
+                              <input type="hidden" value=" " id="score">
+                              <div class="col-md-12 text-right">
+                                <button type="submit" value="submit" class="btn" id="button">
+                                  Submit Now
+                                </button>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+              <!-- Product Description Area End-->
+<script>
+  var one =  document.getElementById('one')
+  var two =  document.getElementById('two')
+  var three = document.getElementById('three')
+  var forur = document.getElementById('four')
+  var five = document.getElementById('five')
+  var array = [one, two, three, four, five]
+  array.forEach(item=> item.addEventListener('mouseover', (event)=>{
+    // console.log(event.target.dataset.num)
+    // for (let i=0; i < 5; i++){
+    //   if(i < event.target.dataset.num){
+    //     array[i].classList.add('fas')
+    //   }else{
+    //     array[i].classList.remove('fas')
+    //   }
+    // }
+  }))
+  var inpId = $('#score')
+  array.forEach(item => item.addEventListener('click', (event) =>{
+    score = event.target.dataset.num
+    for (let i=0; i < 5; i++){
+      if(i < event.target.dataset.num){
+        array[i].classList.add('fas')
+      }else{
+        array[i].classList.remove('fas')
+      }
+    }
+    // switch(score){
+    
+    // case 1:
+    //   document.getElementById('filling').innerHTML('<i>very bad</i>');
+    //   console.log(score)
+    //   break;
+    // case 2:
+    //   document.getElementById('filling').innerHTML('bad');
+    //   break;
+    // case 3:
+    //   document.getElementById('filling').innerHTML('well');
+    //   break;
+    // case 4:
+    //   document.getElementById('filling').innerHTML('best');
+    //   break;
+    // case 5:
+    //   document.getElementById('filling').innerHTML('Outstanding');
+    //   break;
+    // }
+  }))
+  $(document).on('click','#button',function(e) {
+    var docu = $('textarea[name="body"]').val()
+    e.preventDefault();
+    $.ajax({   
+      type: 'POST',
+      url: '{% url "product"  object.slug %}',
+      data: {'body':docu,score,csrfmiddlewaretoken: getCookie("csrftoken")},
+      cache: false,
+      success: function (json){
+          // location.reload()
+          $('<div class="review_item"> \
+          <div class="media"> \
+            <div class="d-flex"> \
+              <img src="{% static "ecom/img/gallery/review-1.png" %}" alt="" /> \
+            </div>  \
+            <div class="media-body">  \
+              <h4>' +json['author'] +'</h4>  \
+              {% with ""|center:3 as range %} \
+              {% for _ in range %}  \
+                <i class="fa fa-star "></i> \
+              {% endfor %}  \
+            {% endwith %} \
+            </div>  \
+          </div>  \
+          <p> \
+           ' +json['body']+ '\
+          </p>  \
+        </div>').insertBefore('#review1');
+      },
+      error:function(xhr,errmsg,err){
+
+      }
+        
+    });
+    });
+</script>
+
+{% endblock %}  
+{% block scriprt %}
+  <script src="{% static 'ecom/js/lightslider.min.js' %}"> </script>
+{% endblock %}        
+              
